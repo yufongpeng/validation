@@ -3,21 +3,25 @@ A simple R script to calculate intra-day accuracy, precision and inter-day accur
 
 ## Computation
 ### Intra-day
-$$\mu_{d} = \frac{\sum_{j = 1}^{n_r} c_{d, j}}{n_r}$$
-$$\sigma_{intra} = s_{intra} = \sqrt{\frac{\sum_{i = 1}^{r_d}\sum_{j = 1}^{n_r} (c_{i, j} - \mu_i)^2}{n_d \times (n_r - 1)}}$$
-$$accuracy_{intra, d} = \frac{\mu_{d}}{conc.}$$
-$$precision_{intra, d} = rsd_{intra, d} = \frac{\sigma_{intra}}{accuracy_{intra, d}}$$
+
+$$\mu_{d} = \sum_{j=1}^{n_r} \dfrac{c_{d, j}}{n_r}$$
+
+$$\sigma_{intra} = s_{intra} = \sqrt{\sum_{i = 1}^{r_d}\sum_{j = 1}^{n_r} \dfrac{(c_{i, j} - \mu_i)^2}{n_d \times (n_r - 1)}}$$
+
+$$accuracy_{intra, d} = \dfrac{\mu_{d}}{conc.}$$
+
+$$precision_{intra, d} = rsd_{intra, d} = \dfrac{\sigma_{intra}}{accuracy_{intra, d}}$$
 $n_d$: number of days, $n_r$: number of repeats, $c_{i, j}$: measured concentration of $i$ th day and $j$ th repeat, $conc.$: reference concentration
 ### Inter-day
-$$\mu = \frac{\sum_{i = 1}^{n_d}\sum_{j = 1}^{n_r} c_{i, j}}{n_d \times n_r}$$
+$$\mu = \sum_{i = 1}^{n_d}\sum_{j = 1}^{n_r} \dfrac{c_{i, j}}{n_d \times n_r}$$
 
-$$accuracy_{inter} = \frac{\sum_{i = 1}^{n_d} accuracy_{intra, i}}{n_d} = \frac{\mu}{conc.}$$
+$$accuracy_{inter} = \sum_{i = 1}^{n_d} \dfrac{accuracy_{intra, i}}{n_d} = \dfrac{\mu}{conc.}$$
 
-$$s_{inter} = \sqrt{\frac{\sum_{i = 1}^{n_d} (\mu_i - \mu)^2}{n_d - 1}}$$
+$$s_{inter} = \sqrt{\sum_{i = 1}^{n_d} \dfrac{(\mu_i - \mu)^2}{n_d - 1}}$$
 
-$$\sigma_{inter} = \sqrt{max\{0, s_{inter}^2 - \frac{s_{intra}^2}{n_r}\}}$$
+$$\sigma_{inter} = \sqrt{max\\{0, s_{inter}^2 - \dfrac{s_{intra}^2}{n_r}\\}}$$
 
-$$precision_{inter} = rsd_{inter} = \frac{\sigma_{inter}}{accuracy_{inter}}$$
+$$precision_{inter} = rsd_{inter} = \dfrac{\sigma_{inter}}{accuracy_{inter}}$$
 
 ## Tutorial
 Open this file in Rstudio and run the `main` function, a gui will pop up. You can choose one or multiple csv files.
