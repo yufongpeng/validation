@@ -10,9 +10,13 @@ $$precision_{intra, d} = rsd_{intra, d} = \frac{\sigma_{intra}}{accuracy_{intra,
 $n_d$: number of days, $n_r$: number of repeats, $c_{i, j}$: measured concentration of $i$ th day and $j$ th repeat, $conc.$: reference concentration
 ### Inter-day
 $$\mu = \frac{\sum_{i = 1}^{n_d}\sum_{j = 1}^{n_r} c_{i, j}}{n_d \times n_r}$$
+
 $$accuracy_{inter} = \frac{\sum_{i = 1}^{n_d} accuracy_{intra, i}}{n_d} = \frac{\mu}{conc.}$$
+
 $$s_{inter} = \sqrt{\frac{\sum_{i = 1}^{n_d} (\mu_i - \mu)^2}{n_d - 1}}$$
+
 $$\sigma_{inter} = \sqrt{max\{0, s_{inter}^2 - \frac{s_{intra}^2}{n_r}\}}$$
+
 $$precision_{inter} = rsd_{inter} = \frac{\sigma_{inter}}{accuracy_{inter}}$$
 
 ## Tutorial
