@@ -74,21 +74,24 @@ data.split <- function(data.file){
 
 main <- function(){
   data.files <- choose.files()
-  kw <- read_json(paste(dirname(this.path()), "/config.json", sep = ""))
+  #kw <- read_json(paste(dirname(this.path()), "/config.json", sep = ""))
   dfs <- map(data.files, ~data.split(.) %>% map(validation) %>% reduce(~c(...)))
-  combine.files <- as.logical(kw[["combine"]])
+  combine.files <- askYesNo("Do you want to combine all analytes into one csv file?")
   ns <- map(dfs, ~map(., ~length(.)))
-  if (reduce(ns, ~c(...)) %>% unique %>% length > 1){
-    combine <- FALSE
+  if (combine.files && reduce(ns, ~c(...)) %>% unique %>% length > 1){
+      combine.files <- FALSE
+      split.files <- askYesNo("Fail to combine all analytes. Do you want to split all analytes into different csv files?")
+  }else{
+    split.files <- askYesNo("Do you want to split all analytes into different csv files?")
   }
-  if (combine){
+  if (combine.files){
     filename <- data.files %>% map_chr(~gsub("\\", "_", ., fixed = TRUE) %>% gsub(".*_", "", .) %>% gsub(".csv$", "", .)) %>% c(., "validation.csv") 
     rootname <- gsub(paste(filename[1], "csv", sep = "."), "", data.files[1])
     filename <- paste(rootname, filename %>% reduce(~paste(..., sep = "_")), sep = "")
     print(filename)
     write.csv(dfs %>% map(~reduce(., rbind)) %>% reduce(rbind), file = filename, row.names = FALSE) 
   }else{
-    if (as.logical(kw[["split_analytes"]])){
+    if (split.files){
       dfs %>% map2(data.files, ~map2(.x, .y, ~write.csv(.x, print(gsub(".csv$", paste("", .x[1, 2], "validation.csv", sep = "_"), .y)), row.names = FALSE)))
     }else{
       split <- map_lgl(ns, ~unique(.) %>% length > 1)

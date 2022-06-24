@@ -64,12 +64,11 @@ low|analyte1|1.008|0.038987177|0.972|0.04|0.041793141|0.042997059|0.040973668|1|
 
 
 ### Configuration settings
-There is a json file, `config.json` with two paramters:
-1. `combine`: whether to combine all analytes into one csv file.
-2. `split_analytes`: whether to split analytes into different csv files.
+After selecting files and processing, two gui will pop out:
+1. "Do you want to combine all analytes into one csv file?"
+2. "Do you want to split all analytes into different csv files?"
 
-When `combine` is true, the function will try to combine all analytes into one csv file. If the number of days are different or `combine` is false, `split_analytes` will control if splitting all analytes into different csv files or making analytes stay in the same csv files as before. If different length of levels occur, the file will be automatically splitted.
-By default, `combine` is true and `split_analytes` is false.
+When the first question is answered "Yes", this program will try to combine all analytes into one csv file. If the number of days are different or it is answered "No", the second question will control if splitting all analytes into different csv files or making analytes stay in the same csv files as before. If different length of levels occur, the file will be automatically splitted.
 
 ### Templates
 There are 3 csv files in `\exmple`; they can be served as templates and test files.
